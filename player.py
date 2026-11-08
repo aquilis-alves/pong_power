@@ -38,6 +38,9 @@ class player:
             direction = direction.normalize()  # evita andar mais rápido na diagonal
 
         self.position += direction * self.speed * dt
+        
+        self.position.x = max(0, min(self.position.x, self.screen_size[0] - self.width))
+        self.position.y = max(0, min(self.position.y, self.screen_size[1] - self.height))
 
     def draw(self, screen):
         rect = pygame.Rect(self.position.x, self.position.y, self.width, self.height)
