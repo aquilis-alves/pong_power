@@ -8,8 +8,9 @@ class player:
         self.color = color
         self.speed = speed
         self.width = 15
+        self.form=pygame.Rect(self.position.x, self.position.y, self.width, self.height)
         
-    def update(self, dt, free=False):
+    def update(self, dt, screen, free=False):
         keys = pygame.key.get_pressed()
         direction = pygame.Vector2(0, 0)
 
@@ -42,7 +43,7 @@ class player:
         self.position.x = max(0, min(self.position.x, self.screen_size[0] - self.width))
         self.position.y = max(0, min(self.position.y, self.screen_size[1] - self.height))
 
-    def draw(self, screen):
-        rect = pygame.Rect(self.position.x, self.position.y, self.width, self.height)
-        pygame.draw.rect(screen, self.color, rect)
+        self.form=pygame.Rect(self.position.x, self.position.y, self.width, self.height)
+        pygame.draw.rect(screen, self.color, self.form)
+    
         

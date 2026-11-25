@@ -1,7 +1,10 @@
 import pygame
 from player import player
+from Ball import Ball
 
 # pygame setup
+
+
 screen_size = (1280, 720)
 
 pygame.init()
@@ -11,6 +14,8 @@ running = True
 dt = 0
 background_color = "black"
 
+
+ball=Ball((1280//2, 720//2), screen_size, 30)
 player1 = player(100, (50, 360), screen_size)
 player2 = player(100, (1230, 360), screen_size)
 
@@ -32,9 +37,15 @@ while running:
     screen.fill(background_color)
     
     for player in players:
-        player.update(dt)
-        player.draw(screen)
 
+        player.update(dt, screen)
+
+        ball.update(screen)
+
+        if ball.form.colliderect(player.form):
+            ball.speed[0]*=-1
+
+    
     # flip() the display to put your work on screen
     pygame.display.flip()
 
