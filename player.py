@@ -9,6 +9,7 @@ class player:
         self.speed = speed
         self.width = 15
         self.form=pygame.Rect(self.position.x, self.position.y, self.width, self.height)
+        self.score=0
         
     def update(self, dt, screen, free=False):
         keys = pygame.key.get_pressed()
