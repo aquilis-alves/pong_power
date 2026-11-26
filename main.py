@@ -1,35 +1,59 @@
 import pygame
-from Config import Config
+from Config import Config as cg
 from player import player
 from Ball import Ball
 
 pygame.init()
-screen = pygame.display.set_mode(Config.TELA)
+screen = pygame.display.set_mode(cg.TELA)
 clock = pygame.time.Clock()
 running = True
 
-ball = Ball(Config.BOLA_POS_INICIAL, Config.TELA, Config.BOLA_TAMANHO)
-player1 = player(Config.JOGADOR_TAMANHO, Config.JOGADOR1_POS, Config.TELA)
-player2 = player(Config.JOGADOR_TAMANHO, Config.JOGADOR2_POS, Config.TELA)
+ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
+player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
+player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA)
 
 players = [player1, player2]
 
+def colidir(ball, p):
+    # verifica colisao da bola com player
+    if not ball.form.colliderect(p.form):
+        return
+
+    sobre_x = min(ball.form.right, p.form.right) - max(ball.form.left, p.form.left)
+    sobre_y = min(ball.form.bottom, p.form.bottom) - max(ball.form.top, p.form.top)
+
+    if sobre_x < sobre_y:
+        # batida na lateral da raquete
+        if ball.form.centerx < p.form.centerx:
+            ball.position.x = p.form.left - ball.radius
+            ball.speed[0] = -abs(ball.speed[0])
+        else:
+            ball.position.x = p.form.right
+            ball.speed[0] = abs(ball.speed[0])
+    else:
+        # batida em cima ou embaixo da raquete
+        if ball.form.centery < p.form.centery:
+            ball.position.y = p.form.top - ball.radius
+            ball.speed[1] = -abs(ball.speed[1])
+        else:
+            ball.position.y = p.form.bottom
+            ball.speed[1] = abs(ball.speed[1])
+
 while running:
-    dt = clock.tick(Config.FPS) / 1000
+    dt = clock.tick(cg.FPS) / 1000
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill(Config.COR_FUNDO)
+    screen.fill(cg.COR_FUNDO)
+    pygame.draw.rect(screen, (50, 50, 50), pygame.Rect((cg.LARGURA // 2), 0, 5, cg.ALTURA))
 
     ball.update(screen)          
 
     for p in players:  
         p.update(dt, screen)
-
-        if ball.form.colliderect(p.form):
-            ball.speed[0] *= -1
+        colidir(ball, p)
 
     pygame.display.flip()
 
