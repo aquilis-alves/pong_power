@@ -2,7 +2,6 @@ import pygame
 import random
 
 class Ball:
-
     speed_XY=(3,-3)
 
     def __init__(self, position, screen_size, radius, color="white"):

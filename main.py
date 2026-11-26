@@ -1,52 +1,36 @@
 import pygame
+from Config import Config
 from player import player
 from Ball import Ball
 
-# pygame setup
-
-
-screen_size = (1280, 720)
-
 pygame.init()
-screen = pygame.display.set_mode(screen_size)
+screen = pygame.display.set_mode(Config.TELA)
 clock = pygame.time.Clock()
 running = True
-dt = 0
-background_color = "black"
 
-
-ball=Ball((1280//2, 720//2), screen_size, 30)
-player1 = player(100, (50, 360), screen_size)
-player2 = player(100, (1230, 360), screen_size)
+ball = Ball(Config.BOLA_POS_INICIAL, Config.TELA, Config.BOLA_TAMANHO)
+player1 = player(Config.JOGADOR_TAMANHO, Config.JOGADOR1_POS, Config.TELA)
+player2 = player(Config.JOGADOR_TAMANHO, Config.JOGADOR2_POS, Config.TELA)
 
 players = [player1, player2]
 
 while running:
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
-    dt = clock.tick(60) / 1000
-    
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+    dt = clock.tick(Config.FPS) / 1000
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill(background_color)
-    
-    for player in players:
+    screen.fill(Config.COR_FUNDO)
 
-        player.update(dt, screen)
+    ball.update(screen)          
 
-        ball.update(screen)
+    for p in players:  
+        p.update(dt, screen)
 
-        if ball.form.colliderect(player.form):
-            ball.speed[0]*=-1
+        if ball.form.colliderect(p.form):
+            ball.speed[0] *= -1
 
-    
-    # flip() the display to put your work on screen
     pygame.display.flip()
 
 pygame.quit()
