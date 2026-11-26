@@ -14,19 +14,18 @@ player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA)
 
 players = [player1, player2]
 
-
-
 def scored(ball):
-    if ball.position.x==cg.LARGURA:
+    if ball.position.x > cg.LARGURA:
         player2.score+=1
         return True
     
-    if ball.position.x==0:
+    elif ball.position.x < 0:
         player1.score+=1
         return True
+    
+    print(ball)
 
 def colidir(ball, p):
-  
     # verifica colisao da bola com player
     if not ball.form.colliderect(p.form):
         return
@@ -60,7 +59,6 @@ while running:
 
     screen.fill(cg.COR_FUNDO)
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect((cg.LARGURA // 2), 0, 5, cg.ALTURA))
-
 
     ball.update(screen)          
 
