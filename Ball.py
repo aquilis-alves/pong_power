@@ -16,7 +16,7 @@ class Ball:
     def update(self, screen):
         superiorBorder, inferiorBorder = 0, cg.ALTURA - self.radius
         
-        if self.position.y>inferiorBorder or self.position.y<superiorBorder:
+        if self.position.y>inferiorBorder or self.position.y<superiorBorder+50:
             self.speed[1]*=-1
 
         self.position.x+=self.speed[0]

@@ -55,6 +55,8 @@ while running:
         p.update(dt, screen)
         colidir(ball, p)
 
+    pygame.draw.line(screen, (255,255,255), (0, 50), (1280, 50), 4)
+
     pygame.display.flip()
 
 pygame.quit()

@@ -15,7 +15,7 @@ class player:
         direction = pygame.Vector2(0, 0)
 
         # checa se o player esta na esquerda ou na direita
-        if self.position.x < self.screen_size[0] / 2:
+        if self.position.x < (self.screen_size[0] / 2):
             if keys[pygame.K_w]:
                 direction.y -= 1
             if keys[pygame.K_s]:
@@ -41,7 +41,7 @@ class player:
         self.position += direction * self.speed * dt
         
         self.position.x = max(0, min(self.position.x, self.screen_size[0] - self.width))
-        self.position.y = max(0, min(self.position.y, self.screen_size[1] - self.height))
+        self.position.y = max(50, min(self.position.y, self.screen_size[1] - self.height))
 
         self.form=pygame.Rect(self.position.x, self.position.y, self.width, self.height)
         pygame.draw.rect(screen, self.color, self.form)
