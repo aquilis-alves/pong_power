@@ -27,6 +27,7 @@ def scored(ball):
 
 def colidir(ball, p):
     # verifica colisao da bola com player
+    
     if not ball.form.colliderect(p.form):
         return
 
@@ -35,6 +36,9 @@ def colidir(ball, p):
 
     if sobre_x < sobre_y:
         # batida na lateral da raquete
+        pygame.mixer.music.load("./assets/sounds/hit_1.wav")
+        pygame.mixer.music.play()
+        
         if ball.form.centerx < p.form.centerx:
             ball.position.x = p.form.left - ball.radius
             ball.speed[0] = -abs(ball.speed[0])
@@ -43,6 +47,9 @@ def colidir(ball, p):
             ball.speed[0] = abs(ball.speed[0])
     else:
         # batida em cima ou embaixo da raquete
+        pygame.mixer.music.load("./assets/sounds/hit_1.wav")
+        pygame.mixer.music.play()
+        
         if ball.form.centery < p.form.centery:
             ball.position.y = p.form.top - ball.radius
             ball.speed[1] = -abs(ball.speed[1])
