@@ -11,6 +11,10 @@ class GeneralPower:
     def small_ball(ball):
         ball.radius -= 10
 
+    @staticmethod
+    def many_balls():
+        return random.choice([2,3,4])
+
 class PlayerPower:
 
     player_with_debuff=None

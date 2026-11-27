@@ -21,7 +21,7 @@ player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
 players = [player1, player2]
 balls_in_game=[ball]
 main_ball=balls_in_game[0]
-possible_powers=['Fast_ball','Lock_player','Small_ball','Small_player']
+possible_powers=['Fast_ball','Lock_player','Small_ball','Small_player', 'Many_balls']
 
 menu = Menu(screen, clock,)
 max_points = 0
@@ -57,6 +57,12 @@ class Power:
                     GeneralPower.small_ball(main_ball)
                 else:
                     main_ball.radius=cg.BOLA_TAMANHO
+                    
+            case 'Many_balls':
+                plus_balls=GeneralPower.many_balls()
+                for i in range(plus_balls):
+                    balls_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
+
             case 'Small_player':
                 if activate:
                     PlayerPower.small_player(player1, player2)
@@ -74,9 +80,14 @@ class Power:
                 main_ball.color=(255,0,0)
             case 'Lock_player':
                 pygame.draw.line(screen, (255,0,0), (PlayerPower.player_with_debuff.position.x, cg.ALTURA), (PlayerPower.player_with_debuff.position.x, 0), 2)
-               
 
+def false_scored_extra_balls(ball):    
+    if ball.position.x > cg.LARGURA or ball.position.x < 0:
+            return True
+    return False
+    
 def scored(ball):
+    
     if ball.position.x > cg.LARGURA:
         player2.score+=1
         return True
@@ -84,6 +95,9 @@ def scored(ball):
     elif ball.position.x < 0:
         player1.score+=1
         return True
+
+    return False
+    
 
 def colidir(ball, p):
     # verifica colisao da bola com player
@@ -164,7 +178,6 @@ while running:
                 Power.select_power(actual_power, False)
                 inicial_time = actual_time
 
-        main_ball.update(screen)
 
         vel_bola = pygame.Vector2(ball.speed).length() * cg.FPS
 
@@ -173,12 +186,18 @@ while running:
             colidir(main_ball, p)
             p.speed = vel_bola
         
+        for ball in balls_in_game[:]:
+            ball.update(screen)
+            if ball==main_ball:
+                if scored(ball):
+                    point_sound.play()
+                    balls_in_game.remove(ball)
+                    balls_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
+                    main_ball=balls_in_game[-1]
+            else:
+                if false_scored_extra_balls(ball):
+                    balls_in_game.remove(ball)
 
-        if scored(main_ball):
-            point_sound.play()
-            balls_in_game.pop(0)
-            balls_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
-            main_ball=balls_in_game[0]
             
         keys = pygame.key.get_pressed()
         winner = who_win(player1, player2, max_points)
