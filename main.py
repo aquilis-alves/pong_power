@@ -15,7 +15,7 @@ running = True
 
 ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
 player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
-player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA)
+player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
 
 players = [player1, player2]
 balls_in_game=[ball]

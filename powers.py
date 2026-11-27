@@ -1,16 +1,15 @@
 import random
 
 class GeneralPower:
-
     @staticmethod
     def speed_ball(ball):
-        ball.speed[0]*=2
-        ball.speed[1]*=2
-        ball.color=(255,255,0)
+        ball.speed[0] *= 2
+        ball.speed[1] *= 2
+        ball.color = (255,255,0)
 
     @staticmethod
     def small_ball(ball):
-        ball.radius-=10
+        ball.radius -= 10
 
 class PlayerPower:
 

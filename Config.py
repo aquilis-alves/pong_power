@@ -3,7 +3,7 @@ class Config:
     LARGURA = 1280
     ALTURA = 720
     TELA = (LARGURA, ALTURA)
-    FPS = 60
+    FPS = 120
     COR_FUNDO = "black"
 
     # Bola
