@@ -4,6 +4,7 @@ from Config import Config as cg
 from player import player
 from Ball import Ball
 
+
 pygame.init()
 screen = pygame.display.set_mode(cg.TELA)
 clock = pygame.time.Clock()
@@ -19,6 +20,7 @@ players = [player1, player2]
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 hit_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "assets", "sounds", "hit_1.wav"))
 font = pygame.font.SysFont('consolas', 30)
+
 
 def scored(ball):
     if ball.position.x > cg.LARGURA:
@@ -71,17 +73,15 @@ while running:
     screen.fill(cg.COR_FUNDO)
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect((cg.LARGURA // 2), 0, 5, cg.ALTURA))
 
-    ball.update(screen)          
+    ball.update(screen)
 
     for p in players:  
         p.update(dt, screen)
         colidir(ball, p)
         
-
     if scored(ball):
         ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
 
-       
     pygame.draw.line(screen, (255,255,255), (0, 50), (1280, 50), 4)
     screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player1.score}', True, (255,255,255), None), [(cg.LARGURA//2)+30, 15])
     screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player2.score}', True, (255,255,255), None), [(cg.LARGURA//2)-40, 15])

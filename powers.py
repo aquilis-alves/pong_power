@@ -1,15 +1,13 @@
-import pygame
-from Ball import Ball
-from player import player
 
+class GeneralPower:
 
-class Power:
-    def __init__(self):
-        pass
+    @staticmethod
+    def speed_ball(ball):
+        ball.speed_XY[0]*=3
+        ball.speed_XY[1]*=3
 
-    def speed_ball(self):
-        Ball.speed_XY[0]*=3
-        Ball.speed_XY[1]*=3
+class PlayerPower:
+    pass
         
 
 
