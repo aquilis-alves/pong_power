@@ -36,10 +36,9 @@ def scored(ball):
 
 def colidir(ball, p):
     # verifica colisao da bola com player
-    
     if not ball.form.colliderect(p.form):
         return
-
+    
     sobre_x = min(ball.form.right, p.form.right) - max(ball.form.left, p.form.left)
     sobre_y = min(ball.form.bottom, p.form.bottom) - max(ball.form.top, p.form.top)
 
@@ -49,10 +48,10 @@ def colidir(ball, p):
         
         if ball.form.centerx < p.form.centerx:
             ball.position.x = p.form.left - ball.radius
-            ball.speed[0] = -abs(ball.speed[0])
+            ball.speed[0] = -abs(ball.speed[0])+player.speed[0]
         else:
             ball.position.x = p.form.right
-            ball.speed[0] = abs(ball.speed[0])
+            ball.speed[0] = abs(ball.speed[0])+player.speed[0]
     else:
         # batida em cima ou embaixo da raquete
         hit_sound.play()
@@ -81,6 +80,7 @@ while running:
         colidir(ball, p)
         
     GeneralPower.speed_ball(ball_in_game[0])
+    PlayerPower.free_player(player1, player2)
 
     if scored(ball_in_game[0]):
         point_sound.play()
