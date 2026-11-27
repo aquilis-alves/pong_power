@@ -1,12 +1,12 @@
 import pygame
 from Config import Config as cg
+from Ball import Ball
 
 BRANCO = (255, 255, 255)
 CINZA = (120, 120, 120)
-AMARELO = (255, 215, 0)
-AZUL=(0,120,220)
+AMARELO = (255, 255, 0)
+AZUL=(0,120,210)
 BLACK=(0,0,0)
-
 
 class Menu:
     """Menu navegável por teclado e mouse.
@@ -22,6 +22,9 @@ class Menu:
         self.titulo = titulo
         self.opcoes = list(opcoes)
         self.selecionado = 0
+        
+        # bolas
+        
 
         # fontes criadas uma única vez
         self.titulo_font = pygame.font.SysFont('consolas', 80, bold=True)

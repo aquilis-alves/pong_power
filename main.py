@@ -49,20 +49,20 @@ def colidir(ball, p):
         
         if ball.form.centerx < p.form.centerx:
             ball.position.x = p.form.left - ball.radius
-            ball.speed[0] = -abs(ball.speed[0])
+            ball.speed[0] = -abs(ball.speed[0] - p.speed.x * 0.01)
         else:
             ball.position.x = p.form.right
-            ball.speed[0] = abs(ball.speed[0])
+            ball.speed[0] = abs(ball.speed[0] + p.speed.x * 0.01)
     else:
         # batida em cima ou embaixo da raquete
         hit_sound.play()
         
         if ball.form.centery < p.form.centery:
             ball.position.y = p.form.top - ball.radius
-            ball.speed[1] = -abs(ball.speed[1])
+            ball.speed[1] = -abs(ball.speed[1] - p.speed.y * 0.01)
         else:
             ball.position.y = p.form.bottom
-            ball.speed[1] = abs(ball.speed[1])
+            ball.speed[1] = abs(ball.speed[1] + p.speed.y * 0.01)
 
 while running:
     dt = clock.tick(cg.FPS) / 1000
@@ -76,9 +76,12 @@ while running:
 
     ball_in_game[0].update(screen)
 
+    vel_bola = pygame.Vector2(ball.speed).length() * cg.FPS
+
     for p in players:  
         p.update(dt, screen)
         colidir(ball_in_game[0], p)
+        p.speed = vel_bola
     
 
     if scored(ball_in_game[0]):
