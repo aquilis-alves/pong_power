@@ -18,13 +18,14 @@ players = [player1, player2]
 # sounds 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 hit_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "assets", "sounds", "hit_1.wav"))
+point_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "assets", "sounds", "point_1.wav"))
 font = pygame.font.SysFont('consolas', 30)
 
 def scored(ball):
     if ball.position.x > cg.LARGURA:
         player2.score+=1
         return True
-    
+
     elif ball.position.x < 0:
         player1.score+=1
         return True
@@ -79,6 +80,7 @@ while running:
         
 
     if scored(ball):
+        point_sound.play()
         ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
 
        

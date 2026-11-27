@@ -1,9 +1,14 @@
 import pygame
+import os
 import random
 from Config import Config as cg
 
 class Ball:
     speed_XY=[3,-3]
+    
+    pygame.mixer.init()
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    hit2_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "assets", "sounds", "hit_2.wav"))
 
     def __init__(self, position, screen_size, radius, color="white"):
         self.position=pygame.Vector2(position)
@@ -18,6 +23,7 @@ class Ball:
         
         if self.position.y>inferiorBorder or self.position.y<superiorBorder+50:
             self.speed[1]*=-1
+            self.hit2_sound.play()
 
         self.position.x+=self.speed[0]
         self.position.y+=self.speed[1]
