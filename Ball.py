@@ -3,7 +3,7 @@ import random
 from Config import Config as cg
 
 class Ball:
-    speed_XY=(3,-3)
+    speed_XY=[3,-3]
 
     def __init__(self, position, screen_size, radius, color="white"):
         self.position=pygame.Vector2(position)
