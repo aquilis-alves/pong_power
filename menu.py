@@ -4,6 +4,8 @@ from Config import Config as cg
 BRANCO = (255, 255, 255)
 CINZA = (120, 120, 120)
 AMARELO = (255, 215, 0)
+AZUL=(0,120,220)
+BLACK=(0,0,0)
 
 
 class Menu:
@@ -68,7 +70,7 @@ class Menu:
         return None
 
     def draw(self):
-        self.screen.fill(cg.COR_FUNDO)
+        self.screen.fill(AZUL)
 
         titulo = self.titulo_font.render(self.titulo, True, BRANCO)
         self.screen.blit(titulo, titulo.get_rect(
@@ -76,7 +78,7 @@ class Menu:
 
         for i, texto in enumerate(self.opcoes):
             ativo = i == self.selecionado
-            cor = AMARELO if ativo else CINZA
+            cor = AMARELO if ativo else BLACK
             rotulo = f"> {texto} <" if ativo else texto
             surf = self.item_font.render(rotulo, True, cor)
             self.screen.blit(surf, surf.get_rect(center=self.rects[i].center))

@@ -48,10 +48,10 @@ def colidir(ball, p):
         
         if ball.form.centerx < p.form.centerx:
             ball.position.x = p.form.left - ball.radius
-            ball.speed[0] = -abs(ball.speed[0])+player.speed[0]
+            ball.speed[0] = -abs(ball.speed[0])
         else:
             ball.position.x = p.form.right
-            ball.speed[0] = abs(ball.speed[0])+player.speed[0]
+            ball.speed[0] = abs(ball.speed[0])
     else:
         # batida em cima ou embaixo da raquete
         hit_sound.play()
