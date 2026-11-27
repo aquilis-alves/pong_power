@@ -3,8 +3,8 @@ class GeneralPower:
 
     @staticmethod
     def speed_ball(ball):
-        ball.speed_XY[0]*=3
-        ball.speed_XY[1]*=3
+        ball.speed[0]*=1.1
+        ball.speed[1]*=1.1
 
 class PlayerPower:
     pass

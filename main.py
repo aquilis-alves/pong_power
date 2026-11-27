@@ -3,6 +3,7 @@ import os
 from Config import Config as cg
 from player import player
 from Ball import Ball
+from powers import GeneralPower, PlayerPower
 
 
 pygame.init()
@@ -15,6 +16,7 @@ player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
 player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA)
 
 players = [player1, player2]
+ball_in_game=[ball]
 
 # sounds 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -31,8 +33,6 @@ def scored(ball):
     elif ball.position.x < 0:
         player1.score+=1
         return True
-    
-    print(ball)
 
 def colidir(ball, p):
     # verifica colisao da bola com player
@@ -74,15 +74,20 @@ while running:
     screen.fill(cg.COR_FUNDO)
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect((cg.LARGURA // 2), 0, 5, cg.ALTURA))
 
-    ball.update(screen)
+    ball_in_game[0].update(screen)
 
     for p in players:  
         p.update(dt, screen)
         colidir(ball, p)
         
-    if scored(ball):
+    GeneralPower.speed_ball(ball_in_game[0])
+
+    if scored(ball_in_game[0]):
         point_sound.play()
-        ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
+        ball_in_game.pop(0)
+        ball_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
+
+
 
     pygame.draw.line(screen, (255,255,255), (0, 50), (1280, 50), 4)
     screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player1.score}', True, (255,255,255), None), [(cg.LARGURA//2)+30, 15])
