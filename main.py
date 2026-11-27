@@ -17,6 +17,7 @@ player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA)
 
 players = [player1, player2]
 ball_in_game=[ball]
+possible_powers=['Fast_ball','Free_player']
 
 # sounds 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -77,10 +78,8 @@ while running:
 
     for p in players:  
         p.update(dt, screen)
-        colidir(ball, p)
-        
-    GeneralPower.speed_ball(ball_in_game[0])
-    PlayerPower.free_player(player1, player2)
+        colidir(ball_in_game[0], p)
+    
 
     if scored(ball_in_game[0]):
         point_sound.play()

@@ -1,18 +1,21 @@
 import pygame
 
 class player:
-    def __init__(self, height, position, screen_size ,speed=300, color="white"):
+    def __init__(self, height, position, screen_size ,max_speed=300, color="white"):
         self.height = height
         self.position = pygame.Vector2(position)
         self.screen_size = screen_size
         self.color = color
-        self.speed = speed
+        self.max_speed = max_speed
+        self.speed=pygame.Vector2(0,0)
         self.width = 15
         self.form=pygame.Rect(self.position.x, self.position.y, self.width, self.height)
         self.score=0
         self.free=False
 
     def update(self, dt, screen):
+
+        
         keys = pygame.key.get_pressed()
         direction = pygame.Vector2(0, 0)
 
@@ -41,11 +44,14 @@ class player:
             direction = direction.normalize()  # evita andar mais rápido na diagonal
 
         self.position += direction * self.speed * dt
+
+        self.speed=direction*self.max_speed
         
         self.position.x = max(0, min(self.position.x, self.screen_size[0] - self.width))
         self.position.y = max(50, min(self.position.y, self.screen_size[1] - self.height))
 
         self.form=pygame.Rect(self.position.x, self.position.y, self.width, self.height)
         pygame.draw.rect(screen, self.color, self.form)
+
     
         
