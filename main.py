@@ -4,6 +4,7 @@ from Config import Config as cg
 from player import player
 from Ball import Ball
 from powers import GeneralPower, PlayerPower
+from menu import Menu
 import random
 
 
@@ -22,6 +23,8 @@ balls_in_game=[ball]
 main_ball=balls_in_game[0]
 possible_powers=['Fast_ball','Lock_player','Small_ball','Small_player']
 
+menu = Menu(screen, clock,)
+max_points = 0
 
 # sounds 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -110,54 +113,86 @@ def colidir(ball, p):
         else:
             ball.position.y = p.form.bottom
             ball.speed[1] = abs(ball.speed[1] + p.speed.y * 0.01)
+            
+def who_win(player1, player2, max_points):
+    if (player1.score >= player2.score + 2) and max(player1.score, player2.score) >= max_points:
+        return "P1 wins"
+    elif (player2.score >= player1.score + 2) and max(player1.score, player2.score) >= max_points:
+        return "P2 wins"
+    
+    return False
 
 while running:
-    dt = clock.tick(cg.FPS) / 1000
+    menu_option = menu.run()
+    if menu_option == "jogar 5":
+        max_points = 5
+        
+    elif menu_option == "jogar 10":
+        max_points = 10
+        
+    elif menu_option == "jogar inf":
+        max_points = -1
+        
+    elif menu_option == 'sair':
+        pygame.quit()
+        
+    while max_points != 0:
+        dt = clock.tick(cg.FPS) / 1000
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                max_points = 0
+                running = False
+                    
+        
+        screen.fill(cg.COR_FUNDO)
+        pygame.draw.rect(screen, (50, 50, 50), pygame.Rect((cg.LARGURA // 2), 0, 5, cg.ALTURA))
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        actual_time = pygame.time.get_ticks()
 
-    screen.fill(cg.COR_FUNDO)
-    pygame.draw.rect(screen, (50, 50, 50), pygame.Rect((cg.LARGURA // 2), 0, 5, cg.ALTURA))
+        if not power:
+            if actual_time - inicial_time >= wait_time:
+                power=True
+                actual_power=random.choice(possible_powers)
+                Power.select_power(actual_power, True)
+                power_time = actual_time
 
-    actual_time = pygame.time.get_ticks()
+        else:
+            Power.manage_powers(actual_power)
+            if actual_time - power_time >= duration_power:
+                power=False
+                Power.select_power(actual_power, False)
+                inicial_time = actual_time
 
-    if not power:
-        if actual_time - inicial_time >= wait_time:
-            power=True
-            actual_power=random.choice(possible_powers)
-            Power.select_power(actual_power, True)
-            power_time = actual_time
+        main_ball.update(screen)
 
-    else:
-        Power.manage_powers(actual_power)
-        if actual_time - power_time >= duration_power:
-            power=False
-            Power.select_power(actual_power, False)
-            inicial_time = actual_time
+        vel_bola = pygame.Vector2(ball.speed).length() * cg.FPS
 
-    main_ball.update(screen)
-
-    vel_bola = pygame.Vector2(ball.speed).length() * cg.FPS
-
-    for p in players:  
-        p.update(dt, screen)
-        colidir(main_ball, p)
-        p.speed = vel_bola
-    
-
-    if scored(main_ball):
-        point_sound.play()
-        balls_in_game.pop(0)
-        balls_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
-        main_ball=balls_in_game[0]
+        for p in players:  
+            p.update(dt, screen)
+            colidir(main_ball, p)
+            p.speed = vel_bola
         
 
-    pygame.draw.line(screen, (255,255,255), (0, 50), (1280, 50), 4)
-    screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player1.score}', True, (255,255,255), None), [(cg.LARGURA//2)+30, 15])
-    screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player2.score}', True, (255,255,255), None), [(cg.LARGURA//2)-40, 15])
+        if scored(main_ball):
+            point_sound.play()
+            balls_in_game.pop(0)
+            balls_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
+            main_ball=balls_in_game[0]
+            
+        keys = pygame.key.get_pressed()
+        winner = who_win(player1, player2, max_points)
 
-    pygame.display.flip()
+        if (winner != False and max_points > 0) or keys[pygame.K_ESCAPE]:
+            print(winner)
+            player1.score = 0
+            player2.score = 0
+            max_points = 0
+        
+        pygame.draw.line(screen, (255,255,255), (0, 50), (1280, 50), 4)
+        screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player1.score}', True, (255,255,255), None), [(cg.LARGURA//2)+30, 15])
+        screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player2.score}', True, (255,255,255), None), [(cg.LARGURA//2)-40, 15])
+
+        pygame.display.flip()
 
 pygame.quit()
