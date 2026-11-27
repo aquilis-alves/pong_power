@@ -4,7 +4,7 @@ import random
 from Config import Config as cg
 
 class Ball:
-    speed_XY=[3,-3]
+    speed_XY=[2,-2]
     
     pygame.mixer.init()
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))

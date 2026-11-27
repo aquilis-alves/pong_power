@@ -5,7 +5,7 @@ from Ball import Ball
 BRANCO = (255, 255, 255)
 CINZA = (120, 120, 120)
 AMARELO = (255, 255, 0)
-AZUL=(0,120,210)
+AZUL=(0,50,210)
 BLACK=(0,0,0)
 
 class Menu:
