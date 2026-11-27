@@ -1,4 +1,5 @@
 import pygame
+import os
 from Config import Config as cg
 from player import player
 from Ball import Ball
@@ -13,6 +14,11 @@ player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
 player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA)
 
 players = [player1, player2]
+
+# sounds 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+hit_sound = pygame.mixer.Sound(os.path.join(BASE_DIR, "assets", "sounds", "hit_1.wav"))
+font = pygame.font.SysFont('consolas', 30)
 
 def scored(ball):
     if ball.position.x > cg.LARGURA:
@@ -36,8 +42,7 @@ def colidir(ball, p):
 
     if sobre_x < sobre_y:
         # batida na lateral da raquete
-        pygame.mixer.music.load("./assets/sounds/hit_1.wav")
-        pygame.mixer.music.play()
+        hit_sound.play()
         
         if ball.form.centerx < p.form.centerx:
             ball.position.x = p.form.left - ball.radius
@@ -47,8 +52,7 @@ def colidir(ball, p):
             ball.speed[0] = abs(ball.speed[0])
     else:
         # batida em cima ou embaixo da raquete
-        pygame.mixer.music.load("./assets/sounds/hit_1.wav")
-        pygame.mixer.music.play()
+        hit_sound.play()
         
         if ball.form.centery < p.form.centery:
             ball.position.y = p.form.top - ball.radius
