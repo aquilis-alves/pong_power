@@ -24,7 +24,7 @@ class Game_over:
             center = (self.largura // 2, self.altura // 2)
         ))
         
-        dica = self.dica_font.render("ESC ou Espaço para voltar", True, cg.CINZA)
+        dica = self.dica_font.render("ESC ou Enter para voltar", True, cg.CINZA)
         self.screen.blit(dica, dica.get_rect(
             center=(self.largura // 2, self.altura - 40)
         ))
@@ -37,7 +37,7 @@ class Game_over:
         while running:
             for event in pygame.event.get():
                 quit = pygame.key.get_pressed()
-                if quit[pygame.K_ESCAPE] or quit[pygame.K_SPACE]or event.type == pygame.QUIT:
+                if quit[pygame.K_ESCAPE] or quit[pygame.K_RETURN]or event.type == pygame.QUIT:
                     running = False
                     
             self.draw()
