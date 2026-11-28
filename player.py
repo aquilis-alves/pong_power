@@ -91,9 +91,16 @@ class player:
                 direction = direction.normalize()
 
             self.speed = direction * self.max_speed
+            
+        meio = self.screen_size[0] / 2
+        
+        if self.is_player1:
+            x_min, x_max = 0, meio - self.width
+        else:
+            x_min, x_max = meio, self.screen_size[0] - self.width
 
         self.position += self.speed * dt
-        self.position.x = max(0, min(self.position.x, self.screen_size[0] - self.width))
+        self.position.x = max(x_min, min(self.position.x, x_max))
         self.position.y = max(50, min(self.position.y, self.screen_size[1] - self.height))
 
         self.form = pygame.Rect(self.position.x, self.position.y, self.width, self.height)
