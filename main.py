@@ -14,15 +14,15 @@ screen = pygame.display.set_mode(cg.TELA)
 clock = pygame.time.Clock()
 running = True
 
-ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
-player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
-player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
+#ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
+#player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
+#player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
 
-players = [player1, player2]
-balls_in_game=[ball]
-main_ball=balls_in_game[0]
-possible_powers=['Fast_ball','Lock_player1','Lock_player2','Small_ball','Small_player1','Small_player2', 'Many_balls']
-powers_in_game={}
+#players = [player1, player2]
+#balls_in_game=[ball]
+#main_ball=balls_in_game[0]
+#possible_powers=['Fast_ball','Lock_player1','Lock_player2','Small_ball','Small_player1','Small_player2', 'Many_balls']
+#powers_in_game={}
 
 
 menu = Menu(screen, clock)
@@ -236,13 +236,22 @@ while running:
             
         keys = pygame.key.get_pressed()
         winner = who_win(player1, player2, max_points)
-
-        if (winner != False and max_points > 0) or keys[pygame.K_ESCAPE]:
+        
+        if (winner != False and max_points > 0):
             it_is_over = Game_over(screen, clock, winner)
             it_is_over.run()
             player1.score = 0
             player2.score = 0
             max_points = 0
+            
+        if keys[pygame.K_ESCAPE]:
+            it_is_over = Game_over(screen, clock, winner)
+            it_is_over.run()
+            player1.score = 0
+            player2.score = 0
+            max_points = 0
+            
+        
         
         pygame.draw.line(screen, (255,255,255), (0, 50), (1280, 50), 4)
         screen.blit(pygame.font.SysFont('consolas', 30).render(f'{player1.score}', True, (255,255,255), None), [(cg.LARGURA//2)+30, 15])

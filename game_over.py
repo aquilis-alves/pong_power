@@ -19,10 +19,16 @@ class Game_over:
     def draw(self):
         self.screen.fill(cg.BLACK)
         
-        text = self.titulo_font.render(f"{self.winner} Ganhou!!!", True, cg.BRANCO)
-        self.screen.blit(text, text.get_rect(
-            center = (self.largura // 2, self.altura // 2)
-        ))
+        if self.winner != False:
+            text = self.titulo_font.render(f"{self.winner} Ganhou!!!", True, cg.BRANCO)
+            self.screen.blit(text, text.get_rect(
+                center = (self.largura // 2, self.altura // 2)
+            ))
+        else:
+            text = self.titulo_font.render(f"Jogo encerrado", True, cg.BRANCO)
+            self.screen.blit(text, text.get_rect(
+                center = (self.largura // 2, self.altura // 2)
+            ))
         
         dica = self.dica_font.render("ESC ou Enter para voltar", True, cg.CINZA)
         self.screen.blit(dica, dica.get_rect(
