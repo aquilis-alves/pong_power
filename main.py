@@ -4,6 +4,7 @@ from Config import Config as cg
 from player import player
 from Ball import Ball
 from powers import GeneralPower, PlayerPower
+from game_over import Game_over
 from menu import Menu
 import random
 
@@ -222,7 +223,8 @@ while running:
         winner = who_win(player1, player2, max_points)
 
         if (winner != False and max_points > 0) or keys[pygame.K_ESCAPE]:
-            print(winner)
+            it_is_over = Game_over(screen, clock, winner)
+            it_is_over.run()
             player1.score = 0
             player2.score = 0
             max_points = 0

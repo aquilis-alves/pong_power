@@ -2,12 +2,6 @@ import pygame
 from Config import Config as cg
 from Ball import Ball
 
-BRANCO = (255, 255, 255)
-CINZA = (120, 120, 120)
-AMARELO = (255, 255, 0)
-AZUL=(0,50,210)
-BLACK=(0,0,0)
-
 class Menu:
     """Menu navegável por teclado e mouse.
 
@@ -37,7 +31,7 @@ class Menu:
     def _criar_rects(self):
         rects = []
         for i, texto in enumerate(self.opcoes):
-            surf = self.item_font.render(texto, True, BRANCO)
+            surf = self.item_font.render(texto, True, cg.BRANCO)
             rects.append(surf.get_rect(
                 center=(self.largura // 2, self.altura // 2 + i * 70)))
         return rects
@@ -73,21 +67,21 @@ class Menu:
         return None
 
     def draw(self):
-        self.screen.fill(AZUL)
+        self.screen.fill(cg.AZUL)
 
-        titulo = self.titulo_font.render(self.titulo, True, BRANCO)
+        titulo = self.titulo_font.render(self.titulo, True, cg.BRANCO)
         self.screen.blit(titulo, titulo.get_rect(
             center=(self.largura // 2, self.altura // 4)))
 
         for i, texto in enumerate(self.opcoes):
             ativo = i == self.selecionado
-            cor = AMARELO if ativo else BLACK
+            cor = cg.AMARELO if ativo else cg.BLACK
             rotulo = f"> {texto} <" if ativo else texto
             surf = self.item_font.render(rotulo, True, cor)
             self.screen.blit(surf, surf.get_rect(center=self.rects[i].center))
 
         dica = self.dica_font.render(
-            "Setas/W/S para mover - Enter para escolher", True, CINZA)
+            "Setas/W/S para mover - Enter para escolher", True, cg.CINZA)
         self.screen.blit(dica, dica.get_rect(
             center=(self.largura // 2, self.altura - 40)))
 
