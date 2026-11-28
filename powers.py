@@ -15,6 +15,10 @@ class GeneralPower:
     def many_balls():
         return random.choice([2,3,4])
 
+    @staticmethod
+    def big_ball(ball):
+        ball.radius+=15
+
 class PlayerPower:
 
     players_with_lock_debuff=[]

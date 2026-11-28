@@ -26,7 +26,7 @@ class player:
         # --- dash ---
         self.dash_speed = 1500
         self.dash_duration = 0.12
-        self.dash_cooldown = 1.0
+        self.dash_cooldown = 0.25
         self.double_tap_window = 0.25
         self.dash_timer = 0.0
         self.dash_cooldown_timer = 0.0

@@ -20,7 +20,7 @@ player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
 players = [player1, player2]
 balls_in_game=[ball]
 main_ball=balls_in_game[0]
-possible_powers=['Fast_ball','Lock_player1','Lock_player2','Small_ball','Small_player1','Small_player2', 'Many_balls']
+possible_powers=['Fast_ball','Lock_player1','Lock_player2','Small_ball','Big_ball','Small_player1','Small_player2', 'Many_balls']
 powers_in_game={}
 
 
@@ -56,14 +56,19 @@ class Power:
                     GeneralPower.small_ball(main_ball)
                 else:
                     main_ball.radius=cg.BOLA_TAMANHO
+            case 'Big_ball':
+                if activate:
+                    GeneralPower.big_ball(main_ball)
+                else:
+                    main_ball.radius=cg.BOLA_TAMANHO
 
             case 'Many_balls':
                 if activate:
                     plus_balls=GeneralPower.many_balls()
                     for i in range(plus_balls):
-                        balls_in_game.append(Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO))
-                        balls_in_game[-1].speed[0]-=abs(random.choice([1,1.3,1.5]))                
-                        balls_in_game[-1].speed[1]-=abs(random.choice([1,1.3,1.5]))                
+                        balls_in_game.append(Ball((main_ball.position.x, main_ball.position.y), cg.TELA, cg.BOLA_TAMANHO))
+                        balls_in_game[-1].speed[0]-=abs(random.choice([1,1.1,1.3,1.5]))                
+                        balls_in_game[-1].speed[1]-=abs(random.choice([1,1.1,1.3,1.5]))                
                 else:
                     pass
 
