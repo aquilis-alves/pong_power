@@ -14,17 +14,6 @@ screen = pygame.display.set_mode(cg.TELA)
 clock = pygame.time.Clock()
 running = True
 
-ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
-player1 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
-player2 = player(cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
-
-players = [player1, player2]
-balls_in_game=[ball]
-main_ball=balls_in_game[0]
-possible_powers=['Fast_ball','Lock_player1','Lock_player2','Small_ball','Small_player1','Small_player2', 'Many_balls']
-powers_in_game={}
-
-
 menu = Menu(screen, clock)
 max_points = 0
 
@@ -139,9 +128,9 @@ def colidir(ball, p):
             
 def who_win(player1, player2, max_points):
     if (player1.score >= player2.score + 2) and max(player1.score, player2.score) >= max_points:
-        return "P1 wins"
+        return player1.nome
     elif (player2.score >= player1.score + 2) and max(player1.score, player2.score) >= max_points:
-        return "P2 wins"
+        return player2.nome
     
     return False
 
@@ -162,6 +151,16 @@ while running:
         
     elif menu_option == 'sair':
         pygame.quit()
+        
+    ball = Ball(cg.BOLA_POS_INICIAL, cg.TELA, cg.BOLA_TAMANHO)
+    player1 = player(menu.nome1, cg.JOGADOR_TAMANHO, cg.JOGADOR1_POS, cg.TELA)
+    player2 = player(menu.nome2, cg.JOGADOR_TAMANHO, cg.JOGADOR2_POS, cg.TELA, is_player1=False)
+
+    players = [player1, player2]
+    balls_in_game=[ball]
+    main_ball=balls_in_game[0]
+    possible_powers=['Fast_ball','Lock_player1','Lock_player2','Small_ball','Small_player1','Small_player2', 'Many_balls']
+    powers_in_game={}
         
     while max_points != 0:
         dt = clock.tick(cg.FPS) / 1000
