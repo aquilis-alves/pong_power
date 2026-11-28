@@ -15,3 +15,10 @@ class Config:
     MARGEM_JOGADOR = 50        
     JOGADOR1_POS = (MARGEM_JOGADOR, ALTURA // 2)
     JOGADOR2_POS = (LARGURA - MARGEM_JOGADOR, ALTURA // 2)
+    
+    # cores
+    BRANCO = (255, 255, 255)
+    CINZA = (190, 190, 190)
+    AMARELO = (255, 255, 0)
+    AZUL=(0,50,190)
+    BLACK=(0,0,0)

@@ -1,7 +1,9 @@
 import pygame
 
 class player:
-    def __init__(self, height, position, screen_size, max_speed=500, color="white", is_player1=True):
+    def __init__(self, nome, height, position, screen_size, max_speed=500, color="white", is_player1=True):
+        self.nome = nome
+        
         self.height = height
         self.position = pygame.Vector2(position)
         self.screen_size = screen_size
